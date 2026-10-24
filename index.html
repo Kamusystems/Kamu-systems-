@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kamu Systems · Results Notebook</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📙</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--violet:#5B21B6;--violet-2:#7C3AED;--violet-50:#F5F3FF;--violet-100:#EDE9FE;--green:#059669;--green-2:#10B981;--green-50:#ECFDF5;--ink:#1E1B2E;--muted:#6B6880;--line:#E4E0F0;--paper:#FFFFFF;--danger:#BE123C;
+--display:"Fraunces",Georgia,"Times New Roman",serif;--body:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;font-family:var(--body);color:var(--ink);background:#F7F6FB;font-size:15px;line-height:1.5;padding-bottom:env(safe-area-inset-bottom,0px)}
+:focus-visible{outline:3px solid var(--green-2);outline-offset:2px}
+header{background:var(--violet);color:#fff;position:sticky;top:0;z-index:10;padding-top:env(safe-area-inset-top,0px);box-shadow:0 2px 0 var(--green)}
+.bar{max-width:1180px;margin:auto;padding:12px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:.2px}
+.brand small{display:block;font-family:var(--body);font-weight:500;font-size:11px;opacity:.8;letter-spacing:.3px}
+.mark{width:36px;height:36px;border-radius:9px;background:var(--green-2);display:grid;place-items:center;font-size:19px}
+nav{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto}
+nav button{background:transparent;color:#EDE9FE;border:0;padding:8px 12px;border-radius:8px;font:inherit;font-weight:500;cursor:pointer}
+nav button:hover{background:rgba(255,255,255,.12)}
+nav button[aria-current="page"]{background:#fff;color:var(--violet);font-weight:600}
+main{max-width:1180px;margin:auto;padding:28px 20px 60px}
+h1{font-family:var(--display);font-size:30px;margin:0 0 4px;color:var(--violet)}
+.sub{color:var(--muted);margin:0 0 22px}
+h2{font-family:var(--display);font-size:19px;margin:0 0 12px}
+.hidden{display:none!important}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:20px;
+background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 31px,#EEEAF7 31px,#EEEAF7 32px);background-position:0 20px}
+.card>*{position:relative}
+.grid{display:grid;gap:20px}
+@media(min-width:860px){.g2{grid-template-columns:1fr 1.6fr}.g4{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:859px){.g4{grid-template-columns:repeat(2,1fr)}}
+.stat{border-left:5px solid var(--green);background:var(--paper);border-radius:12px;padding:16px;border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stat b{display:block;font-family:var(--display);font-size:28px;color:var(--violet)}
+.stat span{color:var(--muted);font-size:13px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+.row>label{flex:1 1 170px;display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:600;color:var(--muted)}
+input,select{font:inherit;color:var(--ink);padding:10px 12px;border:1px solid #CFC9E3;border-radius:9px;background:#fff;min-width:0;width:100%}
+input:focus,select:focus{border-color:var(--violet-2);outline:none;box-shadow:0 0 0 3px var(--violet-100)}
+.btn{font:inherit;font-weight:600;border:0;border-radius:9px;padding:10px 16px;cursor:pointer;background:var(--violet);color:#fff;white-space:nowrap}
+.btn:hover{background:var(--violet-2)}
+.btn.green{background:var(--green)}.btn.green:hover{background:var(--green-2)}
+.btn.ghost{background:var(--violet-50);color:var(--violet);border:1px solid var(--violet-100)}
+.btn.ghost:hover{background:var(--violet-100)}
+.btn.del{background:#fff;color:var(--danger);border:1px solid #F5C2CC;padding:6px 10px}
+.msg{font-size:13px;margin-top:10px;min-height:18px}
+.msg.ok{color:var(--green)}.msg.err{color:var(--danger)}
+.table-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--line);background:#fff}
+table{width:100%;border-collapse:collapse;min-width:620px}
+th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+th{background:var(--violet-50);color:var(--violet);font-size:13px;font-weight:600}
+tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:600}
+.g-A,.g-B{background:var(--green-50);color:var(--green)}
+.g-C{background:#FEF9C3;color:#854D0E}
+.g-D,.g-F{background:#FFE4E6;color:var(--danger)}
+.g-na{background:#F1F0F5;color:var(--muted)}
+.bar2{height:8px;border-radius:99px;background:var(--violet-100);overflow:hidden;min-width:90px}
+.bar2 i{display:block;height:100%;background:linear-gradient(90deg,var(--violet-2),var(--green-2))}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.toolbar input{flex:2 1 220px}.toolbar select{flex:1 1 160px;width:auto}
+.empty{color:var(--muted);text-align:center;padding:28px 10px;border:1px dashed #CFC9E3;border-radius:10px;background:#fff}
+.report-head{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:flex-start;border-bottom:2px solid var(--green);padding-bottom:12px;margin-bottom:14px}
+.overall{text-align:right}
+.overall b{font-family:var(--display);font-size:40px;color:var(--green);line-height:1}
+.overall span{display:block;color:var(--muted);font-size:13px}
+.list button{display:block;width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:8px;cursor:pointer;font:inherit}
+.list button:hover{border-color:var(--violet-2);background:var(--violet-50)}
+.list small{color:var(--muted)}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:10px 20px 30px}
+@media print{header,nav,.noprint{display:none!important}body{background:#fff}.card{border:0}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <div class="brand"><div class="mark" aria-hidden="true">📙</div><div>Kamu Systems<small>Results Notebook</small></div></div>
+    <nav aria-label="Main">
+      <button data-view="dashboard" aria-current="page">Dashboard</button>
+      <button data-view="schools">Schools</button>
+      <button data-view="students">Students</button>
+      <button data-view="record">Record marks</button>
+      <button data-view="results">Results</button>
+      <button data-view="portal">Student portal</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- DASHBOARD -->
+  <section id="v-dashboard" data-sec>
+    <h1>Dashboard</h1>
+    <p class="sub">An overview of schools, students and recorded examination results.</p>
+    <div class="grid g4" style="margin-bottom:20px">
+      <div class="stat"><b id="s-schools">0</b><span>Schools registered</span></div>
+      <div class="stat"><b id="s-students">0</b><span>Students registered</span></div>
+      <div class="stat"><b id="s-marks">0</b><span>Results recorded</span></div>
+      <div class="stat"><b id="s-avg">0%</b><span>Overall average</span></div>
+    </div>
+    <div class="card">
+      <h2>Students by overall result</h2>
+      <div id="dash-table"></div>
+    </div>
+  </section>
+
+  <!-- SCHOOLS -->
+  <section id="v-schools" data-sec class="hidden">
+    <h1>Schools</h1>
+    <p class="sub">Register each school once. Students are linked to a school.</p>
+    <div class="card">
+      <h2>Add a school</h2>
+      <div class="row">
+        <label>School name<input id="sc-name" placeholder="e.g. Kamuzu Academy" maxlength="120"></label>
+        <label>District / city<input id="sc-district" placeholder="e.g. Lilongwe" maxlength="80"></label>
+        <label>Contact person<input id="sc-contact" placeholder="Head teacher or admin" maxlength="80"></label>
+        <button class="btn" onclick="addSchool()">Save school</button>
+      </div>
+      <div class="msg" id="sc-msg"></div>
+    </div>
+    <div class="card">
+      <h2>Registered schools</h2>
+      <div class="toolbar"><input id="sc-search" placeholder="Search schools" oninput="renderSchools()" aria-label="Search schools"></div>
+      <div class="table-wrap" id="sc-table"></div>
+    </div>
+  </section>
+
+  <!-- STUDENTS -->
+  <section id="v-students" data-sec class="hidden">
+    <h1>Students</h1>
+    <p class="sub">Register students. Each one receives a unique Student ID used to view results.</p>
+    <div class="card">
+      <h2>Add a student</h2>
+      <div class="row">
+        <label>Full name<input id="st-name" placeholder="e.g. Grace Banda" maxlength="80"></label>
+        <label>School<select id="st-school"></select></label>
+        <label>Class<input id="st-class" placeholder="e.g. Form 3A" maxlength="30"></label>
+        <button class="btn green" onclick="addStudent()">Register student</button>
+      </div>
+      <div class="msg" id="st-msg"></div>
+    </div>
+    <div class="card">
+      <h2>Student list</h2>
+      <div class="toolbar">
+        <input id="stl-search" placeholder="Search by name or Student ID" oninput="renderStudents()" aria-label="Search students">
+        <select id="stl-school" onchange="renderStudents()" aria-label="Filter by school"></select>
+        <select id="stl-class" onchange="renderStudents()" aria-label="Filter by class"><option value="">All classes</option></select>
+      </div>
+      <div class="table-wrap" id="st-table"></div>
+    </div>
+  </section>
+
+  <!-- RECORD MARKS -->
+  <section id="v-record" data-sec class="hidden">
+    <h1>Record marks</h1>
+    <p class="sub">Teachers record examination results. Scores are out of 100.</p>
+    <div class="card">
+      <h2>New result</h2>
+      <div class="row">
+        <label>Student<select id="rc-student" onchange="renderMarks()"></select></label>
+        <label>Subject<select id="rc-subject"></select></label>
+        <label>Examination<input id="rc-exam" placeholder="e.g. End of term 1" maxlength="60"></label>
+        <label>Score (0–100)<input id="rc-score" type="number" min="0" max="100" step="0.5" placeholder="0"></label>
+        <button class="btn" onclick="addMark()">Save result</button>
+      </div>
+      <div class="msg" id="rc-msg"></div>
+    </div>
+    <div class="card">
+      <h2>Recorded results for selected student</h2>
+      <div class="toolbar">
+        <input id="rc-search" placeholder="Search by examination or subject" oninput="renderMarks()" aria-label="Search results">
+        <select id="rc-filter" onchange="renderMarks()" aria-label="Filter by subject"><option value="">All subjects</option></select>
+      </div>
+      <div class="table-wrap" id="rc-table"></div>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="v-results" data-sec class="hidden">
+    <h1>Results</h1>
+    <p class="sub">Automatic averages and overall percentage for every student.</p>
+    <div class="card">
+      <div class="toolbar">
+        <input id="rs-search" placeholder="Search student name or ID" oninput="renderResults()" aria-label="Search results list">
+        <select id="rs-school" onchange="renderResults()" aria-label="Filter by school"></select>
+        <select id="rs-grade" onchange="renderResults()" aria-label="Filter by grade">
+          <option value="">All grades</option><option>A</option><option>B</option><option>C</option><option>D</option><option>F</option>
+        </select>
+        <select id="rs-sort" onchange="renderResults()" aria-label="Sort results">
+          <option value="pct">Sort: highest overall</option><option value="name">Sort: name A–Z</option>
+        </select>
+      </div>
+      <div class="table-wrap" id="rs-table"></div>
+    </div>
+  </section>
+
+  <!-- STUDENT PORTAL -->
+  <section id="v-portal" data-sec class="hidden">
+    <h1>Student portal</h1>
+    <p class="sub">Students find their results by Student ID or name.</p>
+    <div class="card">
+      <div class="row">
+        <label>Student ID or name<input id="po-q" placeholder="e.g. KS-0001 or Grace" maxlength="80" onkeydown="if(event.key==='Enter')searchPortal()"></label>
+        <button class="btn" onclick="searchPortal()">Find my results</button>
+      </div>
+      <div class="msg" id="po-msg"></div>
+    </div>
+    <div class="card hidden" id="po-list"></div>
+    <div class="card hidden" id="po-report"></div>
+  </section>
+</main>
+<footer>Kamu Systems · Secure school records · Figures update automatically</footer>
+
+<script>
+const KEY="kamu-systems-v1";
+const SUBJECTS=["Chemistry","Biology","English","Chichewa","Physics","Mathematics","Geography","Social Studies"];
+let db={schools:[],students:[],marks:[]};
+let portalStudent=null;
+
+function load(){try{const r=localStorage.getItem(KEY);if(r)db=Object.assign(db,JSON.parse(r));}catch(e){}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(db));}catch(e){}}
+function uid(){return Math.random().toString(36).slice(2,10)}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function msg(id,text,ok){const el=document.getElementById(id);el.textContent=text;el.className="msg "+(ok?"ok":"err");}
+function fill(el,items,placeholder){el.innerHTML=(placeholder?`<option value="">${esc(placeholder)}</option>`:"")+items.map(i=>`<option value="${esc(i.value)}">${esc(i.label)}</option>`).join("");}
+function schoolName(id){const s=db.schools.find(x=>x.id===id);return s?s.name:"—"}
+function grade(p){if(p==null)return{g:"—",c:"g-na"};if(p>=80)return{g:"A",c:"g-A"};if(p>=70)return{g:"B",c:"g-B"};if(p>=60)return{g:"C",c:"g-C"};if(p>=50)return{g:"D",c:"g-D"};return{g:"F",c:"g-F"};}
+function r1(n){return Math.round(n*10)/10}
+
+// Automatic calculations: subject average = mean of its results; overall % = mean of subject averages
+function calc(studentId){
+  const marks=db.marks.filter(m=>m.studentId===studentId);
+  const subj={};
+  SUBJECTS.forEach(s=>{const list=marks.filter(m=>m.subject===s);if(list.length)subj[s]={avg:r1(list.reduce((a,b)=>a+Number(b.score),0)/list.length),n:list.length};});
+  const avgs=Object.values(subj).map(x=>x.avg);
+  const overall=avgs.length?r1(avgs.reduce((a,b)=>a+b,0)/avgs.length):null;
+  return{subj,overall,count:marks.length,grade:grade(overall)};
+}
+function pctBar(p){return p==null?'<span class="g-na pill">No results</span>':`<div style="display:flex;align-items:center;gap:8px"><div class="bar2"><i style="width:${Math.min(p,100)}%"></i></div><b>${p}%</b></div>`}
+
+// NAVIGATION
+function show(v){
+  document.querySelectorAll("[data-sec]").forEach(s=>s.classList.toggle("hidden",s.id!=="v-"+v));
+  document.querySelectorAll("nav button").forEach(b=>b.setAttribute("aria-current",b.dataset.view===v?"page":"false"));
+  if(v==="dashboard")renderDashboard();
+  window.scrollTo(0,0);
+}
+document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.view)));
+
+// SCHOOLS
+function addSchool(){
+  const name=document.getElementById("sc-name").value.trim();
+  const district=document.getElementById("sc-district").value.trim();
+  const contact=document.getElementById("sc-contact").value.trim();
+  if(!name)return msg("sc-msg","Enter the school name.");
+  if(db.schools.some(s=>s.name.toLowerCase()===name.toLowerCase()))return msg("sc-msg","This school is already registered.");
+  db.schools.push({id:uid(),name,district,contact,created:Date.now()});save();
+  ["sc-name","sc-district","sc-contact"].forEach(i=>document.getElementById(i).value="");
+  msg("sc-msg","School saved.",true);refreshAll();
+}
+function renderSchools(){
+  const q=document.getElementById("sc-search").value.trim().toLowerCase();
+  const rows=db.schools.filter(s=>(s.name+" "+s.district).toLowerCase().includes(q));
+  document.getElementById("sc-table").innerHTML=rows.length?`<table><thead><tr><th>School</th><th>District</th><th>Contact</th><th class="num">Students</th><th></th></tr></thead><tbody>${rows.map(s=>`<tr><td><b>${esc(s.name)}</b></td><td>${esc(s.district)||"—"}</td><td>${esc(s.contact)||"—"}</td><td class="num">${db.students.filter(x=>x.schoolId===s.id).length}</td><td style="text-align:right"><button class="btn del" onclick="delSchool('${s.id}')">Remove</button></td></tr>`).join("")}</tbody></table>`:`<div class="empty">No schools match your search. Add a school above to begin.</div>`;
+}
+function delSchool(id){
+  if(db.students.some(s=>s.schoolId===id))return alert("This school still has students. Remove or move them first.");
+  if(!confirm("Remove this school?"))return;
+  db.schools=db.schools.filter(s=>s.id!==id);save();refreshAll();
+}
+
+// STUDENTS
+function addStudent(){
+  const name=document.getElementById("st-name").value.trim();
+  const schoolId=document.getElementById("st-school").value;
+  const cls=document.getElementById("st-class").value.trim();
+  if(!schoolId)return msg("st-msg","Register a school first, then select it here.");
+  if(!name)return msg("st-msg","Enter the student's full name.");
+  const n=db.students.length+1;
+  const sid="KS-"+String(n).padStart(4,"0");
+  db.students.push({id:uid(),sid,name,schoolId,cls,created:Date.now()});save();
+  document.getElementById("st-name").value="";document.getElementById("st-class").value="";
+  msg("st-msg",`Student registered. Student ID: ${sid}`,true);refreshAll();
+}
+function renderStudents(){
+  const q=document.getElementById("stl-search").value.trim().toLowerCase();
+  const sc=document.getElementById("stl-school").value;
+  const cl=document.getElementById("stl-class").value;
+  const rows=db.students.filter(s=>(!q||(s.name+" "+s.sid).toLowerCase().includes(q))&&(!sc||s.schoolId===sc)&&(!cl||s.cls===cl));
+  document.getElementById("st-table").innerHTML=rows.length?`<table><thead><tr><th>Student ID</th><th>Name</th><th>School</th><th>Class</th><th></th></tr></thead><tbody>${rows.map(s=>`<tr><td><b>${esc(s.sid)}</b></td><td>${esc(s.name)}</td><td>${esc(schoolName(s.schoolId))}</td><td>${esc(s.cls)||"—"}</td><td style="text-align:right"><button class="btn del" onclick="delStudent('${s.id}')">Remove</button></td></tr>`).join("")}</tbody></table>`:`<div class="empty">No students found. Register a student above.</div>`;
+}
+function delStudent(id){
+  if(!confirm("Remove this student and all their results?"))return;
+  db.students=db.students.filter(s=>s.id!==id);db.marks=db.marks.filter(m=>m.studentId!==id);save();refreshAll();
+}
+
+// RECORD MARKS
+function addMark(){
+  const studentId=document.getElementById("rc-student").value;
+  const subject=document.getElementById("rc-subject").value;
+  const exam=document.getElementById("rc-exam").value.trim();
+  const score=parseFloat(document.getElementById("rc-score").value);
+  if(!studentId)return msg("rc-msg","Select a student.");
+  if(!exam)return msg("rc-msg","Enter the examination name.");
+  if(isNaN(score)||score<0||score>100)return msg("rc-msg","Score must be between 0 and 100.");
+  db.marks.push({id:uid(),studentId,subject,exam,score,date:new Date().toISOString().slice(0,10)});save();
+  document.getElementById("rc-score").value="";document.getElementById("rc-exam").value="";
+  msg("rc-msg",`Saved ${subject} result: ${score}%.`,true);refreshAll();
+}
+function renderMarks(){
+  const sid=document.getElementById("rc-student").value;
+  const q=document.getElementById("rc-search").value.trim().toLowerCase();
+  const f=document.getElementById("rc-filter").value;
+  const rows=db.marks.filter(m=>m.studentId===sid&&(!f||m.subject===f)&&(!q||(m.exam+" "+m.subject).toLowerCase().includes(q)));
+  document.getElementById("rc-table").innerHTML=!sid?`<div class="empty">Select a student to see their results.</div>`:rows.length?`<table><thead><tr><th>Date</th><th>Subject</th><th>Examination</th><th class="num">Score</th><th></th></tr></thead><tbody>${rows.map(m=>`<tr><td>${m.date}</td><td>${esc(m.subject)}</td><td>${esc(m.exam)}</td><td class="num"><b>${m.score}%</b></td><td style="text-align:right"><button class="btn del" onclick="delMark('${m.id}')">Delete</button></td></tr>`).join("")}</tbody></table>`:`<div class="empty">No results recorded for this student yet.</div>`;
+}
+function delMark(id){if(!confirm("Delete this result?"))return;db.marks=db.marks.filter(m=>m.id!==id);save();refreshAll();}
+
+// RESULTS
+function renderResults(){
+  const q=document.getElementById("rs-search").value.trim().toLowerCase();
+  const sc=document.getElementById("rs-school").value;
+  const g=document.getElementById("rs-grade").value;
+  const sort=document.getElementById("rs-sort").value;
+  let rows=db.students.map(s=>({s,c:calc(s.id)})).filter(x=>(!q||(x.s.name+" "+x.s.sid).toLowerCase().includes(q))&&(!sc||x.s.schoolId===sc)&&(!g||x.c.grade.g===g));
+  rows.sort((a,b)=>sort==="name"?a.s.name.localeCompare(b.s.name):(b.c.overall??-1)-(a.c.overall??-1));
+  document.getElementById("rs-table").innerHTML=rows.length?`<table><thead><tr><th>Student</th><th>School</th>${SUBJECTS.map(s=>`<th class="num">${s.slice(0,4)}.</th>`).join("")}<th style="min-width:150px">Overall</th><th>Grade</th></tr></thead><tbody>${rows.map(({s,c})=>`<tr><td><b>${esc(s.name)}</b><br><small style="color:var(--muted)">${esc(s.sid)}</small></td><td>${esc(schoolName(s.schoolId))}</td>${SUBJECTS.map(sub=>`<td class="num">${c.subj[sub]?c.subj[sub].avg+"%":"–"}</td>`).join("")}<td>${pctBar(c.overall)}</td><td><span class="pill ${c.grade.c}">${c.grade.g}</span></td></tr>`).join("")}</tbody></table>`:`<div class="empty">No students match these filters.</div>`;
+}
+
+// DASHBOARD
+function renderDashboard(){
+  const all=db.students.map(s=>({s,c:calc(s.id)}));
+  const withRes=all.filter(x=>x.c.overall!=null);
+  const schoolAvg=withRes.length?r1(withRes.reduce((a,x)=>a+x.c.overall,0)/withRes.length):null;
+  document.getElementById("s-schools").textContent=db.schools.length;
+  document.getElementById("s-students").textContent=db.students.length;
+  document.getElementById("s-marks").textContent=db.marks.length;
+  document.getElementById("s-avg").textContent=(schoolAvg??0)+"%";
+  const top=withRes.sort((a,b)=>b.c.overall-a.c.overall).slice(0,8);
+  document.getElementById("dash-table").innerHTML=top.length?`<div class="table-wrap"><table><thead><tr><th>Student</th><th>School</th><th>Overall</th><th>Grade</th></tr></thead><tbody>${top.map(({s,c})=>`<tr><td><b>${esc(s.name)}</b></td><td>${esc(schoolName(s.schoolId))}</td><td style="min-width:160px">${pctBar(c.overall)}</td><td><span class="pill ${c.grade.c}">${c.grade.g}</span></td></tr>`).join("")}</tbody></table></div>`:`<div class="empty">No results yet. Register students and record their marks to see rankings.</div>`;
+}
+
+// STUDENT PORTAL
+function searchPortal(){
+  const q=document.getElementById("po-q").value.trim().toLowerCase();
+  const list=document.getElementById("po-list");
+  const rep=document.getElementById("po-report");
+  rep.classList.add("hidden");
+  if(!q)return msg("po-msg","Enter your Student ID or name.");
+  const found=db.students.filter(s=>s.sid.toLowerCase()===q||s.name.toLowerCase().includes(q));
+  if(!found.length){list.classList.add("hidden");return msg("po-msg","No student found. Check your Student ID with your school.");}
+  msg("po-msg","");
+  if(found.length===1)return showReport(found[0].id);
+  list.classList.remove("hidden");
+  list.innerHTML=`<h2>Select your name</h2><div class="list">${found.map(s=>`<button onclick="showReport('${s.id}')"><b>${esc(s.name)}</b><br><small>${esc(s.sid)} · ${esc(schoolName(s.schoolId))}</small></button>`).join("")}</div>`;
+}
+function showReport(id){
+  const s=db.students.find(x=>x.id===id);if(!s)return;
+  const c=calc(id);
+  document.getElementById("po-list").classList.add("hidden");
+  const rep=document.getElementById("po-report");
+  rep.classList.remove("hidden");
+  rep.innerHTML=`<div class="report-head"><div><h2 style="font-size:24px;margin:0">${esc(s.name)}</h2><small style="color:var(--muted)">${esc(s.sid)} · ${esc(schoolName(s.schoolId))}${s.cls?" · "+esc(s.cls):""}</small></div><div class="overall"><b>${c.overall==null?"—":c.overall+"%"}</b><span>Overall · Grade ${c.grade.g}</span></div></div>
+  <div class="table-wrap"><table><thead><tr><th>Subject</th><th class="num">Results</th><th class="num">Average</th><th>Grade</th></tr></thead><tbody>${SUBJECTS.map(sub=>{const x=c.subj[sub];const gr=grade(x?x.avg:null);return `<tr><td>${sub}</td><td class="num">${x?x.n:0}</td><td class="num"><b>${x?x.avg+"%":"–"}</b></td><td><span class="pill ${gr.c}">${gr.g}</span></td></tr>`}).join("")}</tbody></table></div>
+  <div class="noprint" style="margin-top:14px"><button class="btn ghost" onclick="window.print()">Print report</button></div>`;
+}
+
+// SHARED REFRESH
+function refreshAll(){
+  const schoolOpts=db.schools.map(s=>({value:s.id,label:s.name}));
+  fill(document.getElementById("st-school"),schoolOpts,"Select school");
+  fill(document.getElementById("rs-school"),schoolOpts,"All schools");
+  const stlSchool=document.getElementById("stl-school");const keep=stlSchool.value;
+  fill(stlSchool,schoolOpts,"All schools");stlSchool.value=keep;
+  const classes=[...new Set(db.students.map(s=>s.cls).filter(Boolean))].sort();
+  const stlClass=document.getElementById("stl-class");const kc=stlClass.value;
+  stlClass.innerHTML=`<option value="">All classes</option>`+classes.map(c=>`<option>${esc(c)}</option>`).join("");stlClass.value=kc;
+  const rcStu=document.getElementById("rc-student");const ks=rcStu.value;
+  fill(rcStu,db.students.map(s=>({value:s.id,label:`${s.name} (${s.sid})`})),"Select student");rcStu.value=ks;
+  if(!document.getElementById("rc-subject").options.length)fill(document.getElementById("rc-subject"),SUBJECTS.map(s=>({value:s,label:s})));
+  const rf=document.getElementById("rc-filter");if(!rf.options.length||rf.options.length===1)rf.innerHTML=`<option value="">All subjects</option>`+SUBJECTS.map(s=>`<option>${s}</option>`).join("");
+  renderSchools();renderStudents();renderMarks();renderResults();renderDashboard();
+}
+
+load();refreshAll();
+</script>
+</body>
+</html>
